@@ -18,14 +18,13 @@ def currency_check():
     origin = request.form['origin']
     travel =request.form['travel']
     amount = int(request.form['amount'])
-    # print(origin in source)
+    print(origin not in source)
     # print(origin)
     # print(type(origin))
-    if origin in source == False:
+    if origin not in source == True:
         flash('origin not valid')
-        
         return redirect('/')
-    elif travel in origin == False:
+    elif travel not in source == True:
         flash('travel not valid')
         return redirect('/')
     else:
