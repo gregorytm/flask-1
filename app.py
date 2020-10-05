@@ -15,29 +15,19 @@ def home_route():
 @app.route('/currency', methods=['POST'])
 def currency_check():
     source = ['GBP', 'HKD' 'IDR', 'ILS', 'DKK', 'INR', 'CHF','MXN', 'CZK', 'SGD', 'THB', 'THB', 'HRK', 'EUR', 'MYR', 'NOK', 'CNY', 'BGN', 'PHP', 'PLN', 'ZAR','CAD', 'ISK', 'BRL', 'RON', 'NZD','TRY','JPY', 'RUB', 'KRW', 'USD', 'AUD', 'HUF', 'SEK']
-    origin = request.form['origin']
-    travel =request.form['travel']
+    origin = request.form['origin'].upper()
+    travel =request.form['travel'].upper()
     amount = int(request.form['amount'])
     print(origin not in source)
     # print(origin)
     # print(type(origin))
-    if origin not in source == True:
-        flash('origin not valid')
-        return redirect('/')
-    elif travel not in source == True:
-        flash('travel not valid')
+    if origin  and travel not in source or amount:
+        flash('not valid inputs')
         return redirect('/')
     else:
         c = CurrencyRates()
         currency_change = c.get_rates(origin)[travel]
         currency_final = currency_change * amount
-        # print(currency_change)
-        # print(type(currency_change))
-        # print(amount)
-        # print(type(amount))
         c_code = CurrencyCodes()
         currency_code = c_code.get_symbol(travel)
         return render_template('currency.html', origin=origin, travel=travel, amount=amount, currency_code = currency_code, currency_final = currency_final)
-
-
-
