@@ -21,8 +21,11 @@ def currency_check():
     print(origin not in source)
     # print(origin)
     # print(type(origin))
-    if origin  and travel not in source or amount:
-        flash('not valid inputs')
+    if origin not in source:
+        flash(f'{origin} input not valid')
+        return redirect('/')
+    elif travel not in source:
+        flash(f'{travel} input not valid')
         return redirect('/')
     else:
         c = CurrencyRates()
